@@ -61,8 +61,8 @@ export default function EventsPage() {
                 }`}
               >
                 <div>
-                  {/* TOP: Large Event Image */}
-                <div className="overflow-hidden rounded-2xl mb-6 relative w-full h-[240px]">
+                {/* TOP: Large Event Image (Poster Aspect Ratio) */}
+                <div className="overflow-hidden rounded-2xl mb-6 relative w-full aspect-[2480/3508]">
                   <Image
                     src={`/event_images/${event.image}`}
                     alt={event.title}

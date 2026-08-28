@@ -82,14 +82,14 @@ export function EventModal({ event, onClose }: EventModalProps) {
               {event.title}
             </h2>
 
-            {/* Large Event Image */}
-            <div className="relative w-full h-[260px] sm:h-[340px] rounded-2xl overflow-hidden">
+            {/* Large Event Image (Poster Aspect Ratio) */}
+            <div className="relative w-full aspect-[2480/3508] max-h-[60vh] rounded-2xl overflow-hidden mx-auto bg-zinc-100 dark:bg-zinc-950">
               <Image
                 src={`/event_images/${event.image}`}
                 alt={event.title}
-               fill
-               className="object-cover"
-             />
+                fill
+                className="object-contain"
+              />
             </div>
 
             {/* Information Badges (Venue & Time) */}
