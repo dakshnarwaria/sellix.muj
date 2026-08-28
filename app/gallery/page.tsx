@@ -1,34 +1,15 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { SEMICIRCLE_GALLERY, HORIZONTAL_STRIP_GALLERY, GALLERY_EVENTS, GalleryEventSection } from "../data/gallery";
+import React, { useState } from "react";
+import { motion, useTransform } from "framer-motion";
+import { SEMICIRCLE_GALLERY, HORIZONTAL_STRIP_GALLERY, GALLERY_EVENTS } from "../data/gallery";
 import { SellixPlaceholder } from "../components/Placeholders";
 import { GalleryLightbox } from "./GalleryLightbox";
 import { Footer } from "../components/Footer";
+import { VelocityMarquee, VelocityRotator } from "../components/ScrollVelocityMotion";
 
 export default function GalleryPage() {
   const [activeAlbum, setActiveAlbum] = useState<{ album: string[]; eventName: string } | null>(null);
-
-  // Scroll Target Refs for Semicircle and Horizontal Strip
-  const orbitRef = useRef<HTMLDivElement>(null);
-  const stripRef = useRef<HTMLDivElement>(null);
-
-  // Orbit Scroll Transformation (Scroll DOWN = CLOCKWISE rotate, Scroll UP = ANTICLOCKWISE)
-  const { scrollYProgress: orbitProgress } = useScroll({
-    target: orbitRef,
-    offset: ["start end", "end start"],
-  });
-  const orbitRotateTransform = useTransform(orbitProgress, [0, 1], [-60, 60]);
-  const smoothOrbitRotate = useSpring(orbitRotateTransform, { stiffness: 90, damping: 20 });
-
-  // Horizontal Strip Scroll Transformation (Scroll DOWN = RIGHT to LEFT, Scroll UP = LEFT to RIGHT)
-  const { scrollYProgress: stripProgress } = useScroll({
-    target: stripRef,
-    offset: ["start end", "end start"],
-  });
-  const stripXTransform = useTransform(stripProgress, [0.1, 0.9], ["0%", "-60%"]);
-  const smoothStripX = useSpring(stripXTransform, { stiffness: 90, damping: 20 });
 
   return (
     <div className="relative min-h-screen flex flex-col pt-24 pb-12 overflow-x-hidden">
@@ -63,7 +44,7 @@ export default function GalleryPage() {
       {/* ------------------------------------------------------------- */}
       {/* 1. SEMICIRCLE / ORBITAL IMAGE ANIMATION                      */}
       {/* ------------------------------------------------------------- */}
-      <section ref={orbitRef} className="relative z-10 py-16 mb-24 overflow-hidden">
+      <section className="relative z-10 py-16 mb-24 overflow-hidden">
         <div className="text-center mb-8">
           <span className="text-xs font-mono font-bold tracking-widest text-[#E31B23] uppercase">
             // ORBITAL VISUAL ARC
@@ -72,50 +53,59 @@ export default function GalleryPage() {
             ROTATING <span className="text-[#E31B23]">SEMICIRCLE</span>
           </h2>
           <p className="text-xs font-mono text-zinc-500 uppercase tracking-wider mt-1">
-            [SCROLL DOWN = CLOCKWISE | SCROLL UP = ANTICLOCKWISE]
+            [CONSTANT CLOCKWISE | SCROLL DOWN = FASTER | SCROLL UP = COUNTER-CLOCKWISE]
           </p>
         </div>
 
-        {/* Orbit Arc Canvas Container */}
-        <div className="relative w-full h-[360px] sm:h-[480px] flex items-center justify-center overflow-hidden">
-          <motion.div
-            style={{ rotate: smoothOrbitRotate }}
-            className="relative w-[600px] sm:w-[800px] h-[600px] sm:h-[800px] rounded-full border border-dashed border-[#E31B23]/30 flex items-center justify-center"
-          >
-            {SEMICIRCLE_GALLERY.map((item, index) => {
-              const total = SEMICIRCLE_GALLERY.length;
-              const angle = (index / total) * Math.PI; // Semicircle arrangement angle
-              const radius = 280; // Radius distance
-              const x = radius * Math.cos(angle - Math.PI / 2);
-              const y = radius * Math.sin(angle - Math.PI / 2);
-
-              return (
+        {/* Velocity Continuous Rotating Orbit Arc */}
+        <VelocityRotator baseRotateVelocity={18}>
+          {(rotateAngle) => {
+            const inverseRotate = useTransform(rotateAngle, (r) => -r);
+            return (
+              <div className="relative w-full h-[360px] sm:h-[480px] flex items-center justify-center overflow-hidden">
                 <motion.div
-                  key={item.id}
-                  style={{
-                    position: "absolute",
-                    left: `calc(50% + ${x}px - 70px)`,
-                    top: `calc(50% + ${y}px - 50px)`,
-                  }}
-                  whileHover={{ scale: 1.15 }}
-                  className="w-32 h-24 sm:w-40 sm:h-28 rounded-2xl overflow-hidden shadow-xl border-2 border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] transition-all duration-300"
+                  style={{ rotate: rotateAngle }}
+                  className="relative w-[600px] sm:w-[800px] h-[600px] sm:h-[800px] rounded-full border border-dashed border-[#E31B23]/30 flex items-center justify-center"
                 >
-                  <SellixPlaceholder
-                    label={item.image}
-                    type="gallery"
-                    className="w-full h-full rounded-none border-none p-1"
-                  />
+                  {SEMICIRCLE_GALLERY.map((item, index) => {
+                    const total = SEMICIRCLE_GALLERY.length;
+                    const angle = (index / total) * 2 * Math.PI; // Full circle distribution
+                    const radius = 280; // Radius distance
+                    const x = radius * Math.cos(angle - Math.PI / 2);
+                    const y = radius * Math.sin(angle - Math.PI / 2);
+
+                    return (
+                      <motion.div
+                        key={item.id}
+                        style={{
+                          position: "absolute",
+                          left: `calc(50% + ${x}px - 70px)`,
+                          top: `calc(50% + ${y}px - 50px)`,
+                        }}
+                        whileHover={{ scale: 1.15 }}
+                        className="w-32 h-24 sm:w-40 sm:h-28 rounded-2xl overflow-hidden shadow-xl border-2 border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] transition-all duration-300"
+                      >
+                        <motion.div style={{ rotate: inverseRotate }} className="w-full h-full">
+                          <SellixPlaceholder
+                            label={item.image}
+                            type="gallery"
+                            className="w-full h-full rounded-none border-none p-1"
+                          />
+                        </motion.div>
+                      </motion.div>
+                    );
+                  })}
                 </motion.div>
-              );
-            })}
-          </motion.div>
-        </div>
+              </div>
+            );
+          }}
+        </VelocityRotator>
       </section>
 
       {/* ------------------------------------------------------------- */}
       {/* 2. HORIZONTAL IMAGE STRIP                                     */}
       {/* ------------------------------------------------------------- */}
-      <section ref={stripRef} className="relative z-10 py-16 mb-28 bg-zinc-100 dark:bg-zinc-900/50 border-y border-zinc-200 dark:border-zinc-800 overflow-hidden">
+      <section className="relative z-10 py-16 mb-28 bg-zinc-100 dark:bg-zinc-900/50 border-y border-zinc-200 dark:border-zinc-800 overflow-hidden">
         <div className="text-center mb-8">
           <span className="text-xs font-mono font-bold tracking-widest text-[#E31B23] uppercase">
             // CONTINUOUS STRIP
@@ -124,27 +114,25 @@ export default function GalleryPage() {
             HORIZONTAL <span className="text-[#E31B23]">TIMELINE</span>
           </h2>
           <p className="text-xs font-mono text-zinc-500 uppercase tracking-wider mt-1">
-            [SCROLL DOWN = RIGHT → LEFT | SCROLL UP = LEFT → RIGHT]
+            [CONSTANT RIGHT → LEFT | SCROLL DOWN = FASTER | SCROLL UP = LEFT → RIGHT]
           </p>
         </div>
 
-        <div className="w-full overflow-hidden px-4">
-          <motion.div style={{ x: smoothStripX }} className="flex gap-6 w-max">
-            {HORIZONTAL_STRIP_GALLERY.map((item) => (
-              <motion.div
-                key={item.id}
-                whileHover={{ scale: 1.05, y: -4 }}
-                className="w-64 sm:w-80 h-44 sm:h-52 rounded-2xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] shrink-0 transition-all duration-300"
-              >
-                <SellixPlaceholder
-                  label={item.image}
-                  type="gallery"
-                  className="w-full h-full rounded-none border-none"
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
+        <VelocityMarquee baseVelocity={-1} className="py-2">
+          {HORIZONTAL_STRIP_GALLERY.map((item) => (
+            <motion.div
+              key={item.id}
+              whileHover={{ scale: 1.05, y: -4 }}
+              className="w-64 sm:w-80 h-44 sm:h-52 rounded-2xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] shrink-0 transition-all duration-300"
+            >
+              <SellixPlaceholder
+                label={item.image}
+                type="gallery"
+                className="w-full h-full rounded-none border-none"
+              />
+            </motion.div>
+          ))}
+        </VelocityMarquee>
       </section>
 
       {/* ------------------------------------------------------------- */}

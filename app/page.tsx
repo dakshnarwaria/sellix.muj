@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { ArrowUpRight } from "lucide-react";
 import { SellixPlaceholder } from "./components/Placeholders";
 import { Footer } from "./components/Footer";
+import { VelocityMarquee } from "./components/ScrollVelocityMotion";
 
 // 7 Leader Items for Vision & Mission
 const LEADERS = [
@@ -62,18 +63,6 @@ const LEADERS = [
 ];
 
 export default function HomePage() {
-  // Sticky container ref for Vision & Mission horizontal scroll
-  const visionTargetRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: visionTargetRef,
-    offset: ["start end", "end start"],
-  });
-
-  // Scroll DOWN -> RIGHT to LEFT (-70% shift)
-  // Scroll UP -> LEFT to RIGHT (+shift)
-  const xTransform = useTransform(scrollYProgress, [0.1, 0.9], ["0%", "-72%"]);
-  const smoothX = useSpring(xTransform, { stiffness: 100, damping: 20 });
-
   return (
     <div className="relative min-h-screen flex flex-col overflow-x-hidden">
       {/* ------------------------------------------------------------- */}
@@ -333,7 +322,7 @@ export default function HomePage() {
       {/* ------------------------------------------------------------- */}
       {/* 4. OUR VISION & MISSION (7 Leader Scroll-Linked Items)       */}
       {/* ------------------------------------------------------------- */}
-      <section ref={visionTargetRef} className="relative z-10 py-24 bg-zinc-100 dark:bg-zinc-900/60 border-t border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
+      <section className="relative z-10 py-24 bg-zinc-100 dark:bg-zinc-900/60 border-t border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 flex flex-col items-center text-center">
           <span className="text-xs font-mono font-bold tracking-widest text-[#E31B23] uppercase">
             // LEADERSHIP DIRECTIVES
@@ -342,39 +331,37 @@ export default function HomePage() {
             OUR VISION & <span className="text-[#E31B23]">MISSION</span>
           </h2>
           <p className="text-xs font-mono text-zinc-500 mt-2 uppercase tracking-widest">
-            [SCROLL DOWN TO MOVE RIGHT → LEFT | SCROLL UP TO MOVE LEFT → RIGHT]
+            [CONSTANT RIGHT → LEFT | SCROLL DOWN = FASTER | SCROLL UP = LEFT → RIGHT]
           </p>
         </div>
 
-        {/* Horizontal Continuous Track for 7 Leaders */}
-        <div className="w-full overflow-hidden px-4">
-          <motion.div style={{ x: smoothX }} className="flex gap-6 sm:gap-8 w-max">
-            {LEADERS.map((leader, index) => (
-              <div
-                key={leader.id}
-                className="w-[300px] sm:w-[360px] p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xl flex flex-col justify-between shrink-0 group hover:border-[#E31B23] transition-all duration-300"
-              >
-                <div>
-                  <div className="relative mb-6">
-                    <SellixPlaceholder label={leader.image} type="leader" className="w-full h-[220px] rounded-2xl" />
-                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#E31B23] text-white font-mono text-[10px] font-bold">
-                      0{index + 1} / 07
-                    </div>
+        {/* Velocity Continuous Marquee Track */}
+        <VelocityMarquee baseVelocity={-1} className="py-2">
+          {LEADERS.map((leader, index) => (
+            <div
+              key={leader.id}
+              className="w-[300px] sm:w-[360px] p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-xl flex flex-col justify-between shrink-0 group hover:border-[#E31B23] transition-all duration-300"
+            >
+              <div>
+                <div className="relative mb-6">
+                  <SellixPlaceholder label={leader.image} type="leader" className="w-full h-[220px] rounded-2xl" />
+                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#E31B23] text-white font-mono text-[10px] font-bold">
+                    0{index + 1} / 07
                   </div>
-                  <h3 className="text-xl font-black text-zinc-900 dark:text-white uppercase">
-                    {leader.name}
-                  </h3>
-                  <span className="text-xs font-bold font-mono text-[#E31B23] tracking-wider uppercase block mt-1">
-                    {leader.role}
-                  </span>
                 </div>
-                <blockquote className="mt-4 pt-4 border-t border-zinc-200/60 dark:border-zinc-800/60 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 italic">
-                  "{leader.quote}"
-                </blockquote>
+                <h3 className="text-xl font-black text-zinc-900 dark:text-white uppercase">
+                  {leader.name}
+                </h3>
+                <span className="text-xs font-bold font-mono text-[#E31B23] tracking-wider uppercase block mt-1">
+                  {leader.role}
+                </span>
               </div>
-            ))}
-          </motion.div>
-        </div>
+              <blockquote className="mt-4 pt-4 border-t border-zinc-200/60 dark:border-zinc-800/60 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 italic">
+                "{leader.quote}"
+              </blockquote>
+            </div>
+          ))}
+        </VelocityMarquee>
       </section>
 
       {/* ------------------------------------------------------------- */}
