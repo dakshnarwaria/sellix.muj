@@ -7,6 +7,7 @@ import { EVENTS, SellixEvent } from "../data/events";
 import { SellixPlaceholder } from "../components/Placeholders";
 import { EventModal } from "./EventModal";
 import { Footer } from "../components/Footer";
+import Image from "next/image";
 
 export default function EventsPage() {
   const [selectedEvent, setSelectedEvent] = useState<SellixEvent | null>(null);
@@ -23,7 +24,7 @@ export default function EventsPage() {
         >
           <span className="w-2 h-2 rounded-full bg-[#E31B23]" />
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#E31B23]">
-            SELLIX EVENT CALENDAR
+            SELLIX EVENTS
           </span>
         </motion.div>
 
@@ -33,7 +34,7 @@ export default function EventsPage() {
           transition={{ duration: 0.6 }}
           className="text-4xl sm:text-6xl font-black uppercase tracking-tight text-zinc-900 dark:text-white"
         >
-          UPCOMING <span className="text-[#E31B23]">EXPERIENCES</span>
+          UPCOMING AND PREVIOUS <span className="text-[#E31B23]">EXPERIENCES</span>
         </motion.h1>
 
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
@@ -61,13 +62,14 @@ export default function EventsPage() {
               >
                 <div>
                   {/* TOP: Large Event Image */}
-                  <div className="overflow-hidden rounded-2xl mb-6">
-                    <SellixPlaceholder
-                      label={event.image}
-                      type="event"
-                      className="w-full h-[240px] group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
+                <div className="overflow-hidden rounded-2xl mb-6 relative w-full h-[240px]">
+                  <Image
+                    src={`/event_images/${event.image}`}
+                    alt={event.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
 
                   {/* BELOW IMAGE: Large Bold Date */}
                   <div className="flex items-center gap-2 mb-3">

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Calendar, MapPin, Clock, ExternalLink } from "lucide-react";
 import { SellixEvent } from "../data/events";
 import { SellixPlaceholder } from "../components/Placeholders";
+import Image from "next/image";
 
 interface EventModalProps {
   event: SellixEvent | null;
@@ -60,7 +61,7 @@ export function EventModal({ event, onClose }: EventModalProps) {
                 {event.date}
               </span>
               <span className="text-xs font-mono font-bold tracking-widest text-[#E31B23] uppercase">
-                // EVENT DETAILS
+                EVENT DETAILS :-
               </span>
             </div>
 
@@ -81,12 +82,15 @@ export function EventModal({ event, onClose }: EventModalProps) {
               {event.title}
             </h2>
 
-            {/* Large Event Image Placeholder */}
-            <SellixPlaceholder
-              label={event.image}
-              type="event"
-              className="w-full h-[260px] sm:h-[340px] rounded-2xl"
-            />
+            {/* Large Event Image */}
+            <div className="relative w-full h-[260px] sm:h-[340px] rounded-2xl overflow-hidden">
+              <Image
+                src={`/event_images/${event.image}`}
+                alt={event.title}
+               fill
+               className="object-cover"
+             />
+            </div>
 
             {/* Information Badges (Venue & Time) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -135,15 +139,19 @@ export function EventModal({ event, onClose }: EventModalProps) {
                 </a>
               </div>
 
-              {/* QR Code Placeholder (Bottom Right) */}
+              {/* QR Code (Bottom Right) */}
               <div className="shrink-0 flex flex-col items-center sm:items-end">
-                <SellixPlaceholder
-                  label={event.qrCode}
-                  type="qr"
-                  className="w-28 h-28 p-2 rounded-xl"
-                />
+                <div className="relative w-28 h-28 p-2 rounded-xl overflow-hidden bg-white">
+                  <Image
+                    src={`/event_images/${event.qrCode}`}
+                    alt={`QR code for ${event.title}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 768px"
+                    className="object-contain"
+                  />
+                </div>
                 <span className="text-[9px] font-mono text-zinc-400 mt-1 uppercase">
-                  EVENT QR CODE
+                  SCAN QR CODE NOW
                 </span>
               </div>
             </div>
