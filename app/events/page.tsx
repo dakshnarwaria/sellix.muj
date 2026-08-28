@@ -42,12 +42,10 @@ export default function EventsPage() {
         </p>
       </section>
 
-      {/* 6 Event Blocks in Alternating Two-Column Positioning */}
-      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-16 mb-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+      {/* Event Blocks in Centered Two-Column Grid */}
+      <section className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full space-y-16 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
           {EVENTS.map((event, index) => {
-            const isRightColumn = index % 2 !== 0;
-
             return (
               <motion.div
                 key={event.id}
@@ -56,12 +54,10 @@ export default function EventsPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ y: -6 }}
-                className={`flex flex-col justify-between p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl hover:border-[#E31B23] dark:hover:border-[#E31B23] hover:shadow-2xl hover:shadow-[#E31B23]/10 transition-all duration-300 group ${
-                  isRightColumn ? "md:translate-y-8" : ""
-                }`}
+                className="flex flex-col justify-between p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl hover:border-[#E31B23] dark:hover:border-[#E31B23] hover:shadow-2xl hover:shadow-[#E31B23]/10 transition-all duration-300 group"
               >
                 <div>
-                {/* TOP: Large Event Image (Poster Aspect Ratio) */}
+                {/* TOP: Event Image (Full Card Width Poster Aspect Ratio) */}
                 <div className="overflow-hidden rounded-2xl mb-6 relative w-full aspect-[2480/3508]">
                   <Image
                     src={`/event_images/${event.image}`}

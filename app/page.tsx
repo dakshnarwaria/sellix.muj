@@ -220,7 +220,7 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl"
           >
-            <div className="relative w-full h-[320px] rounded-2xl overflow-hidden">
+            <div className="relative w-full max-w-[320px] aspect-[2480/3508] rounded-2xl overflow-hidden mx-auto">
               <Image
                 src="/event_images/GraphicversePoster.png"
                 alt="Into the Graphicverse"
@@ -251,36 +251,36 @@ export default function HomePage() {
           {/* EVENT 2: TEXT LEFT, IMAGE RIGHT */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.6 }}
-  className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl lg:flex-row-reverse"
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl lg:flex-row-reverse"
           >
             <div className="space-y-4 order-2 lg:order-1">
               <span className="inline-block px-3 py-1 rounded-md bg-[#E31B23] text-white text-xs font-mono font-bold">
-      13 AUG 2026
+                13 AUG 2026
               </span>
               <h3 className="text-2xl sm:text-3xl font-black uppercase text-zinc-900 dark:text-white">
-      PASS THE TORCH
+                PASS THE TORCH
               </h3>
               <p className="text-zinc-600 dark:text-zinc-300 text-sm sm:text-base">
                 A fun and interactive Freshers-Seniors Meetup where freshers can connect with seniors, clear FAQs about campus, academics, college life & nearby places , and gain valuable tips for a smooth start!
               </p>
               <Link
-      href="/events"
-      className="inline-flex items-center gap-2 font-bold text-sm text-[#E31B23] hover:underline"
-    >
-      VIEW FULL DETAILS <ArrowUpRight className="w-4 h-4" />
+                href="/events"
+                className="inline-flex items-center gap-2 font-bold text-sm text-[#E31B23] hover:underline"
+              >
+                VIEW FULL DETAILS <ArrowUpRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="relative w-full h-[320px] rounded-2xl overflow-hidden order-1 lg:order-2">
-    <Image
-      src="/event_images/PassTheTorchPoster.png"
-      alt="Pass the Torch"
-      fill
-      sizes="(max-width: 1024px) 100vw, 50vw"
-      className="object-cover"
-    />
+            <div className="relative w-full max-w-[320px] aspect-[2480/3508] rounded-2xl overflow-hidden mx-auto order-1 lg:order-2">
+              <Image
+                src="/event_images/PassTheTorchPoster.png"
+                alt="Pass the Torch"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
             </div>
           </motion.div>
         </div>
