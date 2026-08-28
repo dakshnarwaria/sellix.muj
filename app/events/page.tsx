@@ -38,7 +38,7 @@ export default function EventsPage() {
         </motion.h1>
 
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-          Join our intensive growth hackathons, video masterclasses, and branding expos. Select any event to view complete details, venue information, and registration pass.
+          Join our intensive growth hackathons, masterclasses, fun events and branding expos. Select any event to view complete details, venue information, and registration link.
         </p>
       </section>
 
