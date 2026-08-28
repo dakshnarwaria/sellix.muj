@@ -8,55 +8,57 @@ import { ArrowUpRight } from "lucide-react";
 import { SellixPlaceholder } from "./components/Placeholders";
 import { Footer } from "./components/Footer";
 import { VelocityMarquee } from "./components/ScrollVelocityMotion";
+import Image from "next/image";
+
 
 // 7 Leader Items for Vision & Mission
 const LEADERS = [
   {
     id: "leader-1",
-    name: "Aria Thorne",
-    role: "Founding Director",
+    name: "Arshraj Punni",
+    role: "Founder and President",
     quote: "Building the next generation of digital marketing leaders through bold visual storytelling.",
     image: "LEADER_01_IMAGE",
   },
   {
     id: "leader-2",
-    name: "Brandon Cole",
-    role: "Head of Strategy",
+    name: "Akshat Sharma",
+    role: "Vice President",
     quote: "Sales is not about pushing products—it's about engineering genuine human connections.",
     image: "LEADER_02_IMAGE",
   },
   {
     id: "leader-3",
-    name: "Clara Mercer",
-    role: "Creative Visionary",
+    name: "Devashya Patel",
+    role: "Technical Secretary",
     quote: "Visual identity should feel alive, cartoonish, memorable, and undeniably distinct.",
     image: "LEADER_03_IMAGE",
   },
   {
     id: "leader-4",
-    name: "Darius Vance",
-    role: "Growth Architect",
+    name: "Lakshay Saini",
+    role: "Community Director",
     quote: "Virality is engineered through structured hooks, deep user empathy, and rapid iteration.",
     image: "LEADER_04_IMAGE",
   },
   {
     id: "leader-5",
-    name: "Eva Martinez",
-    role: "Media Producer",
+    name: "Pratham Jain",
+    role: "Treasurer",
     quote: "Short-form video is the new global storefront for creators and modern enterprises.",
     image: "LEADER_05_IMAGE",
   },
   {
     id: "leader-6",
-    name: "Farhan Ali",
-    role: "Community Lead",
+    name: "Ruchira Vibhu",
+    role: "General Secretary",
     quote: "Empowering student creators with institutional support, mentorship, and industry access.",
     image: "LEADER_06_IMAGE",
   },
   {
     id: "leader-7",
-    name: "Grace Sterling",
-    role: "Partnerships Head",
+    name: "Akshata Sharma",
+    role: "Managing Director",
     quote: "Connecting bold student campaigns directly with top national brands and sponsors.",
     image: "LEADER_07_IMAGE",
   },
@@ -78,7 +80,7 @@ export default function HomePage() {
         >
           <span className="w-2.5 h-2.5 rounded-full bg-[#E31B23] animate-pulse" />
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#E31B23]">
-            SELLIX — SALES & SOCIAL MEDIA MARKETING
+            CREATE - MARKET - SALE
           </span>
         </motion.div>
 
@@ -90,7 +92,7 @@ export default function HomePage() {
           className="max-w-5xl text-center space-y-6"
         >
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight uppercase leading-[0.95] text-zinc-900 dark:text-white">
-            WE CREATE <span className="text-[#E31B23] underline decoration-[#E31B23]/30 decoration-wavy">VIRAL</span> BRANDS & BOLD CREATORS.
+                <span className="text-[#E31B23] underline decoration-[#E31B23]/30 decoration-wavy">SELLIX :-</span> SALES AND SOCIAL MEDIA MARKETING CLUB OF MUJ.
           </h1>
 
           <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-300 font-medium leading-relaxed">
@@ -150,40 +152,45 @@ export default function HomePage() {
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-zinc-900 dark:text-white leading-none">
               ABOUT <span className="text-[#E31B23]">SELLIX</span>
             </h2>
-            
+
             <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
-              SELLIX is a vibrant collective of marketers, visual directors, strategists, and visual storytellers. Founded to bridge the gap between creative ambition and measurable business impact, we transform ideas into magnetic campaigns.
+             🚀SELLIX is the Sales & Social Media Marketing Club of MUJ, where creativity meets strategy!. We focus on marketing and selling innovative technical and non-technical, mostly student-made projects, while helping members build real-world skills in sales, branding, communication, and digital marketing.💡📱
+
             </p>
 
             <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
-              Through hands-on workshops, real-world growth hackathons, and brand partnerships, SELLIX equips members with high-income skills in social media algorithms, sales funnel design, AI automated workflow, and graphic brand identity.
+              From high-energy competitions like Salesothon 🏆 to insightful workshops 🎯 and exciting fun events 🎉, SELLIX creates opportunities to learn, connect, experiment, and turn ideas into impact. 🔥
             </p>
+
+            <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed"> SELLIX — Where Ideas Meet the Market. 🚀</p>
 
             <div className="grid grid-cols-2 gap-4 pt-4">
               <div className="p-4 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
-                <span className="block text-3xl font-black text-[#E31B23]">50+</span>
-                <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">CAMPAIGN PROJECTS</span>
+                <span className="block text-3xl font-black text-[#E31B23]">5+</span>
+                <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Events</span>
               </div>
               <div className="p-4 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
-                <span className="block text-3xl font-black text-[#E31B23]">1.2M+</span>
-                <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">ORGANIC IMPRESSIONS</span>
+                <span className="block text-3xl font-black text-[#E31B23]">12K+</span>
+                <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">IMPRESSIONS</span>
               </div>
             </div>
           </motion.div>
 
-          {/* RIGHT: Large Image Placeholder */}
+          {/* RIGHT: Large About Image */}
           <motion.div
             initial={{ opacity: 0, x: 30, scale: 0.95 }}
             whileInView={{ opacity: 1, x: 0, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7 }}
-            className="w-full"
+            className="w-full relative h-[380px] sm:h-[480px] rounded-3xl overflow-hidden shadow-2xl"
           >
-            <SellixPlaceholder
-              label="ABOUT_IMAGE_PLACEHOLDER"
-              type="about"
-              className="w-full h-[380px] sm:h-[480px] shadow-2xl rounded-3xl"
-            />
+            <Image
+              src="/sellix_logo.jpeg.png"
+              alt="About Sellix"
+              fill
+              sizes="(max-width: 640px) 100vw, 50vw"
+              className="object-cover"
+           />
           </motion.div>
         </div>
       </section>
@@ -213,16 +220,24 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl"
           >
-            <SellixPlaceholder label="HOME_EVENT_01_IMAGE" className="w-full h-[320px] rounded-2xl" />
+            <div className="relative w-full h-[320px] rounded-2xl overflow-hidden">
+              <Image
+                src="/event_images/GraphicversePoster.png"
+                alt="Into the Graphicverse"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+            </div>
             <div className="space-y-4">
               <span className="inline-block px-3 py-1 rounded-md bg-[#E31B23] text-white text-xs font-mono font-bold">
-                23 AUG 2026
+                14 AUG 2026
               </span>
               <h3 className="text-2xl sm:text-3xl font-black uppercase text-zinc-900 dark:text-white">
-                VIRAL REELS & BRAND STORYTELLING BOOTCAMP
+                Into the Graphicverse
               </h3>
               <p className="text-zinc-600 dark:text-zinc-300 text-sm sm:text-base">
-                Master the art of high-conversion video hooks, storytelling frameworks, and viral algorithms designed to skyrocket audience engagement.
+                Unleash your creativity and turn ideas into stunning visuals! Join our hands-on Graphic Designing Workshop and explore the exciting world of design, creativity, and digital art.
               </p>
               <Link
                 href="/events"
@@ -236,85 +251,37 @@ export default function HomePage() {
           {/* EVENT 2: TEXT LEFT, IMAGE RIGHT */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl lg:flex-row-reverse"
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+  className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl lg:flex-row-reverse"
           >
             <div className="space-y-4 order-2 lg:order-1">
               <span className="inline-block px-3 py-1 rounded-md bg-[#E31B23] text-white text-xs font-mono font-bold">
-                14 SEP 2026
+      13 AUG 2026
               </span>
               <h3 className="text-2xl sm:text-3xl font-black uppercase text-zinc-900 dark:text-white">
-                GROWTH MARKETING & FUNNEL ARCHITECTURE
+      PASS THE TORCH
               </h3>
               <p className="text-zinc-600 dark:text-zinc-300 text-sm sm:text-base">
-                A hands-on masterclass on building high-converting landing pages, lead magnets, and automated email funnel workflows.
+                A fun and interactive Freshers-Seniors Meetup where freshers can connect with seniors, clear FAQs about campus, academics, college life & nearby places , and gain valuable tips for a smooth start!
               </p>
               <Link
-                href="/events"
-                className="inline-flex items-center gap-2 font-bold text-sm text-[#E31B23] hover:underline"
-              >
-                VIEW FULL DETAILS <ArrowUpRight className="w-4 h-4" />
+      href="/events"
+      className="inline-flex items-center gap-2 font-bold text-sm text-[#E31B23] hover:underline"
+    >
+      VIEW FULL DETAILS <ArrowUpRight className="w-4 h-4" />
               </Link>
             </div>
-            <SellixPlaceholder label="HOME_EVENT_02_IMAGE" className="w-full h-[320px] rounded-2xl order-1 lg:order-2" />
-          </motion.div>
-
-          {/* EVENT 3: IMAGE LEFT, TEXT RIGHT */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl"
-          >
-            <SellixPlaceholder label="HOME_EVENT_03_IMAGE" className="w-full h-[320px] rounded-2xl" />
-            <div className="space-y-4">
-              <span className="inline-block px-3 py-1 rounded-md bg-[#E31B23] text-white text-xs font-mono font-bold">
-                05 OCT 2026
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-black uppercase text-zinc-900 dark:text-white">
-                AI-POWERED CONTENT CREATION
-              </h3>
-              <p className="text-zinc-600 dark:text-zinc-300 text-sm sm:text-base">
-                Harness generative AI tools to streamline content ideation, automated copy generation, and visual brand assets.
-              </p>
-              <Link
-                href="/events"
-                className="inline-flex items-center gap-2 font-bold text-sm text-[#E31B23] hover:underline"
-              >
-                VIEW FULL DETAILS <ArrowUpRight className="w-4 h-4" />
-              </Link>
+            <div className="relative w-full h-[320px] rounded-2xl overflow-hidden order-1 lg:order-2">
+    <Image
+      src="/event_images/PassTheTorchPoster.png"
+      alt="Pass the Torch"
+      fill
+      sizes="(max-width: 1024px) 100vw, 50vw"
+      className="object-cover"
+    />
             </div>
-          </motion.div>
-
-          {/* EVENT 4: TEXT LEFT, IMAGE RIGHT */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl lg:flex-row-reverse"
-          >
-            <div className="space-y-4 order-2 lg:order-1">
-              <span className="inline-block px-3 py-1 rounded-md bg-[#E31B23] text-white text-xs font-mono font-bold">
-                28 NOV 2026
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-black uppercase text-zinc-900 dark:text-white">
-                INFLUENCER COLLAB & SPONSORSHIP HACKATHON
-              </h3>
-              <p className="text-zinc-600 dark:text-zinc-300 text-sm sm:text-base">
-                Connect creators with sponsors, learn contract negotiation, pitch deck engineering, and campaign management.
-              </p>
-              <Link
-                href="/events"
-                className="inline-flex items-center gap-2 font-bold text-sm text-[#E31B23] hover:underline"
-              >
-                VIEW FULL DETAILS <ArrowUpRight className="w-4 h-4" />
-              </Link>
-            </div>
-            <SellixPlaceholder label="HOME_EVENT_04_IMAGE" className="w-full h-[320px] rounded-2xl order-1 lg:order-2" />
           </motion.div>
         </div>
       </section>
