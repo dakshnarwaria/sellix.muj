@@ -1,11 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, useScroll, useTransform, useVelocity, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useVelocity, useSpring, AnimatePresence } from "framer-motion";
 
 export function AnimatedBackground() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [activeMessage, setActiveMessage] = useState<string | null>(null);
+
+  // Intro Landing Animation Lifecycle
+  // Stage 0: Sequential piece-by-piece assembly into SELLIX logo shape
+  // Stage 1: Logo complete + SELLIX faded brand name reveal
+  // Stage 2: Intro complete, disperse elements to floating background
+  const [introStage, setIntroStage] = useState<number>(0);
+  const [isIntroActive, setIsIntroActive] = useState<boolean>(true);
+
   const { scrollY } = useScroll();
 
   // Scroll velocity reactive physics
@@ -17,7 +25,7 @@ export function AnimatedBackground() {
   const velocityScale = useTransform(smoothVelocity, [-1500, 0, 1500], [1.2, 1, 1.2]);
   const velocityY = useTransform(smoothVelocity, [-1500, 1500], [-40, 40]);
 
-  // Bounded scroll parallax transformations (keeps elements inside viewport at all times)
+  // Bounded scroll parallax transformations
   const smoothY1 = useTransform(scrollY, [0, 2000], [0, -45]);
   const smoothY2 = useTransform(scrollY, [0, 2000], [0, 50]);
   const smoothY3 = useTransform(scrollY, [0, 2000], [0, -35]);
@@ -25,6 +33,23 @@ export function AnimatedBackground() {
 
   const smoothRotate1 = useTransform(scrollY, [0, 2000], [0, 180]);
   const smoothRotate2 = useTransform(scrollY, [0, 2000], [0, -180]);
+
+  useEffect(() => {
+    // Intro Timeline:
+    // t=0.2s-2.0s: Sequential assembly of logo pieces
+    // t=2.2s: Reveal faded SELLIX text
+    // t=3.8s: Disperse outward to floating background, revealing main website
+    const textTimer = setTimeout(() => setIntroStage(1), 2200);
+    const finishTimer = setTimeout(() => {
+      setIntroStage(2);
+      setIsIntroActive(false);
+    }, 4000);
+
+    return () => {
+      clearTimeout(textTimer);
+      clearTimeout(finishTimer);
+    };
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -43,37 +68,107 @@ export function AnimatedBackground() {
     setTimeout(() => setActiveMessage(null), 2000);
   };
 
+  const skipIntro = () => {
+    setIntroStage(2);
+    setIsIntroActive(false);
+  };
+
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-10 select-none">
       {/* Interactive Toast Bubble on Mascot Click */}
-      {activeMessage && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-[#E31B23] text-white font-mono font-bold text-xs shadow-xl shadow-[#E31B23]/30 pointer-events-none"
-        >
-          {activeMessage}
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {activeMessage && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-[#E31B23] text-white font-mono font-bold text-xs shadow-xl shadow-[#E31B23]/30 pointer-events-none"
+          >
+            {activeMessage}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* 1. TOP-LEFT: Smiling Oval Capsule Mascot */}
+      {/* Small Bottom-Right Skip Button during Intro */}
+      <AnimatePresence>
+        {isIntroActive && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 10 }}
+            onClick={skipIntro}
+            className="fixed bottom-6 right-6 z-50 px-3.5 py-1.5 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-[11px] font-mono font-bold tracking-wider border border-zinc-700/50 dark:border-zinc-300/50 shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 pointer-events-auto"
+          >
+            SKIP INTRO <span className="text-[#E31B23]">→</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Full-Screen Splash Intro Screen (Hides website until finished) */}
+      <AnimatePresence>
+        {isIntroActive && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.8, ease: "easeInOut" } }}
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-white dark:bg-zinc-950 pointer-events-auto select-none"
+          >
+            {/* Central Target Ring & Ambient Glow */}
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: [0, 1.2, 1], opacity: [0, 0.4, 0.2] }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="w-72 h-72 rounded-full bg-[#E31B23]/25 blur-3xl"
+            />
+
+            {/* Faded SELLIX Typography Reveal (Appears after elements assemble) */}
+            {introStage >= 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: 15, filter: "blur(10px)" }}
+                animate={{ opacity: 0.85, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.9, ease: "easeOut" }}
+                className="mt-48 text-center space-y-2 pointer-events-none px-4"
+              >
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-[0.2em] text-[#E31B23] drop-shadow-sm">
+                  SELLIX
+                </h1>
+                <p className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-zinc-500 dark:text-zinc-400 uppercase">
+                  SALES AND SOCIAL MEDIA MARKETING CLUB OF MUJ
+                </p>
+              </motion.div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ---------------------------------------------------------------- */}
+      {/* CARTOON MASCOTS (Sequential intro assembly -> Floating background) */}
+      {/* ---------------------------------------------------------------- */}
+
+      {/* 1. Smiling Oval Capsule Mascot */}
       <motion.div
-        style={{ y: smoothY1 }}
-        animate={{
-          x: mousePos.x * 1.5,
-          y: mousePos.y * 1.5,
-        }}
-        transition={{ type: "spring", stiffness: 60, damping: 18 }}
-        className="absolute top-[10%] left-[3%] w-24 h-24 md:w-32 md:h-32 opacity-35 dark:opacity-50 hover:opacity-100 transition-opacity pointer-events-auto cursor-pointer"
-        whileHover={{ scale: 1.25, rotate: 12, filter: "drop-shadow(0 0 16px rgba(227,27,35,0.6))" }}
+        style={{ y: isIntroActive ? 0 : smoothY1 }}
+        initial={{ x: "-40vw", y: "-40vh", scale: 0, opacity: 0 }}
+        animate={
+          isIntroActive
+            ? { x: "-70px", y: "-70px", scale: 1, opacity: 1 }
+            : { x: mousePos.x * 1.5, y: mousePos.y * 1.5, scale: 1, opacity: 1 }
+        }
+        transition={
+          isIntroActive
+            ? { delay: 0.2, type: "spring", stiffness: 120, damping: 14 }
+            : { type: "spring", stiffness: 60, damping: 18 }
+        }
+        className={`absolute ${
+          isIntroActive ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 opacity-90" : "top-[10%] left-[3%] opacity-15 sm:opacity-20 dark:opacity-25 hover:opacity-100"
+        } w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 transition-opacity pointer-events-auto cursor-pointer`}
+        whileHover={{ scale: 1.25, rotate: 12, filter: "drop-shadow(0 0 16px rgba(227,27,35,0.4))" }}
         whileTap={{ scale: 0.85, rotate: -15 }}
-        drag
+        drag={!isIntroActive}
         dragConstraints={{ left: -30, right: 30, top: -30, bottom: 30 }}
-        onClick={() => triggerToast("✨ SELLIX Capsule Mascot Says Hello!")}
+        onClick={() => triggerToast("✨ SELLIX Capsule Mascot Assembled!")}
       >
         <motion.div
-          style={{ rotate: velocityRotate, scale: velocityScale }}
+          style={{ rotate: isIntroActive ? 0 : velocityRotate, scale: isIntroActive ? 1 : velocityScale }}
           animate={{ y: [0, -10, 0], rotate: [0, 4, -4, 0] }}
           transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
         >
@@ -88,23 +183,31 @@ export function AnimatedBackground() {
         </motion.div>
       </motion.div>
 
-      {/* 2. TOP-RIGHT: Ghost Squircle Mascot */}
+      {/* 2. Ghost Squircle Mascot */}
       <motion.div
-        style={{ y: smoothY2, rotate: smoothRotate1 }}
-        animate={{
-          x: mousePos.x * -1.4,
-          y: mousePos.y * -1.4,
-        }}
-        transition={{ type: "spring", stiffness: 50, damping: 20 }}
-        className="absolute top-[12%] right-[4%] w-22 h-22 md:w-28 md:h-28 opacity-35 dark:opacity-50 hover:opacity-100 transition-opacity pointer-events-auto cursor-pointer"
-        whileHover={{ scale: 1.3, rotate: -15, filter: "drop-shadow(0 0 16px rgba(227,27,35,0.6))" }}
+        style={{ y: isIntroActive ? 0 : smoothY2, rotate: isIntroActive ? 0 : smoothRotate1 }}
+        initial={{ x: "40vw", y: "-40vh", scale: 0, opacity: 0 }}
+        animate={
+          isIntroActive
+            ? { x: "70px", y: "-70px", scale: 1, opacity: 1 }
+            : { x: mousePos.x * -1.4, y: mousePos.y * -1.4, scale: 1, opacity: 1 }
+        }
+        transition={
+          isIntroActive
+            ? { delay: 0.5, type: "spring", stiffness: 120, damping: 14 }
+            : { type: "spring", stiffness: 50, damping: 20 }
+        }
+        className={`absolute ${
+          isIntroActive ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 opacity-90" : "top-[12%] right-[4%] opacity-15 sm:opacity-20 dark:opacity-25 hover:opacity-100"
+        } w-14 h-14 sm:w-22 sm:h-22 md:w-28 md:h-28 transition-opacity pointer-events-auto cursor-pointer`}
+        whileHover={{ scale: 1.3, rotate: -15, filter: "drop-shadow(0 0 16px rgba(227,27,35,0.4))" }}
         whileTap={{ scale: 0.85, rotate: 20 }}
-        drag
+        drag={!isIntroActive}
         dragConstraints={{ left: -30, right: 30, top: -30, bottom: 30 }}
-        onClick={() => triggerToast("👻 Ghost Mascot Boo!")}
+        onClick={() => triggerToast("👻 Ghost Mascot Joined!")}
       >
         <motion.div
-          style={{ y: velocityY, scale: velocityScale }}
+          style={{ y: isIntroActive ? 0 : velocityY, scale: isIntroActive ? 1 : velocityScale }}
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
         >
@@ -117,19 +220,29 @@ export function AnimatedBackground() {
         </motion.div>
       </motion.div>
 
-      {/* 3. UPPER-CENTER: Comic Lightning Spark Bolt */}
+      {/* 3. Upper Comic Lightning Spark Bolt */}
       <motion.div
-        style={{ y: smoothY3, rotate: smoothRotate2 }}
-        animate={{
-          x: mousePos.x * 2.2,
-        }}
-        className="absolute top-[8%] left-[48%] w-16 h-16 md:w-20 md:h-20 opacity-40 dark:opacity-55 hover:opacity-100 transition-opacity pointer-events-auto cursor-pointer"
-        whileHover={{ scale: 1.4, rotate: 45, filter: "drop-shadow(0 0 20px rgba(227,27,35,0.8))" }}
+        style={{ y: isIntroActive ? 0 : smoothY3, rotate: isIntroActive ? 0 : smoothRotate2 }}
+        initial={{ x: "0vw", y: "-50vh", scale: 0, opacity: 0 }}
+        animate={
+          isIntroActive
+            ? { x: "0px", y: "-115px", scale: 1, opacity: 1 }
+            : { x: mousePos.x * 2.2, scale: 1, opacity: 1 }
+        }
+        transition={
+          isIntroActive
+            ? { delay: 0.8, type: "spring", stiffness: 130, damping: 14 }
+            : { type: "spring", stiffness: 60, damping: 20 }
+        }
+        className={`absolute ${
+          isIntroActive ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 opacity-90" : "top-[8%] left-[48%] opacity-15 sm:opacity-20 dark:opacity-25 hover:opacity-100"
+        } w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 transition-opacity pointer-events-auto cursor-pointer`}
+        whileHover={{ scale: 1.4, rotate: 45, filter: "drop-shadow(0 0 20px rgba(227,27,35,0.6))" }}
         whileTap={{ scale: 0.8 }}
-        onClick={() => triggerToast("⚡ Energy Boost!")}
+        onClick={() => triggerToast("⚡ Lightning Spark Power!")}
       >
         <motion.div
-          style={{ rotate: velocityRotate, scale: velocityScale }}
+          style={{ rotate: isIntroActive ? 0 : velocityRotate, scale: isIntroActive ? 1 : velocityScale }}
           animate={{ scale: [0.9, 1.15, 0.9], rotate: [-6, 12, -6] }}
           transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
         >
@@ -139,22 +252,31 @@ export function AnimatedBackground() {
         </motion.div>
       </motion.div>
 
-      {/* 4. MID-LEFT: Comic Speech Bubble Mascot */}
+      {/* 4. Comic Speech Bubble Mascot */}
       <motion.div
-        style={{ y: smoothY3 }}
-        animate={{
-          x: mousePos.x * 1.8,
-          y: mousePos.y * 1.8,
-        }}
-        className="absolute top-[38%] left-[2%] w-26 h-26 md:w-34 md:h-34 opacity-35 dark:opacity-50 hover:opacity-100 transition-opacity pointer-events-auto cursor-pointer"
-        whileHover={{ scale: 1.25, rotate: 8, filter: "drop-shadow(0 0 16px rgba(227,27,35,0.6))" }}
+        style={{ y: isIntroActive ? 0 : smoothY3 }}
+        initial={{ x: "-50vw", y: "0vh", scale: 0, opacity: 0 }}
+        animate={
+          isIntroActive
+            ? { x: "-110px", y: "0px", scale: 1, opacity: 1 }
+            : { x: mousePos.x * 1.8, y: mousePos.y * 1.8, scale: 1, opacity: 1 }
+        }
+        transition={
+          isIntroActive
+            ? { delay: 1.1, type: "spring", stiffness: 120, damping: 14 }
+            : { type: "spring", stiffness: 50, damping: 20 }
+        }
+        className={`absolute ${
+          isIntroActive ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 opacity-90" : "top-[38%] left-[2%] opacity-15 sm:opacity-20 dark:opacity-25 hover:opacity-100"
+        } w-16 h-16 sm:w-26 sm:h-26 md:w-34 md:h-34 transition-opacity pointer-events-auto cursor-pointer`}
+        whileHover={{ scale: 1.25, rotate: 8, filter: "drop-shadow(0 0 16px rgba(227,27,35,0.4))" }}
         whileTap={{ scale: 0.9 }}
-        drag
+        drag={!isIntroActive}
         dragConstraints={{ left: -30, right: 30, top: -30, bottom: 30 }}
-        onClick={() => triggerToast("💬 SELLIX — Sales & Marketing!")}
+        onClick={() => triggerToast("💬 Speech Mascot Speaks!")}
       >
         <motion.div
-          style={{ y: velocityY, rotate: velocityRotate }}
+          style={{ y: isIntroActive ? 0 : velocityY, rotate: isIntroActive ? 0 : velocityRotate }}
           animate={{ y: [0, -12, 0], rotate: [-3, 3, -3] }}
           transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
         >
@@ -170,22 +292,31 @@ export function AnimatedBackground() {
         </motion.div>
       </motion.div>
 
-      {/* 5. MID-RIGHT: Cartoon Megaphone Speaker Mascot */}
+      {/* 5. Cartoon Megaphone Speaker Mascot */}
       <motion.div
-        style={{ y: smoothY4 }}
-        animate={{
-          x: mousePos.x * -1.6,
-          y: mousePos.y * -1.6,
-        }}
-        className="absolute top-[42%] right-[3%] w-24 h-24 md:w-32 md:h-32 opacity-35 dark:opacity-50 hover:opacity-100 transition-opacity pointer-events-auto cursor-pointer"
-        whileHover={{ scale: 1.3, rotate: -10, filter: "drop-shadow(0 0 18px rgba(227,27,35,0.6))" }}
+        style={{ y: isIntroActive ? 0 : smoothY4 }}
+        initial={{ x: "50vw", y: "0vh", scale: 0, opacity: 0 }}
+        animate={
+          isIntroActive
+            ? { x: "110px", y: "0px", scale: 1, opacity: 1 }
+            : { x: mousePos.x * -1.6, y: mousePos.y * -1.6, scale: 1, opacity: 1 }
+        }
+        transition={
+          isIntroActive
+            ? { delay: 1.4, type: "spring", stiffness: 120, damping: 14 }
+            : { type: "spring", stiffness: 50, damping: 20 }
+        }
+        className={`absolute ${
+          isIntroActive ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 opacity-90" : "top-[42%] right-[3%] opacity-15 sm:opacity-20 dark:opacity-25 hover:opacity-100"
+        } w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 transition-opacity pointer-events-auto cursor-pointer`}
+        whileHover={{ scale: 1.3, rotate: -10, filter: "drop-shadow(0 0 18px rgba(227,27,35,0.4))" }}
         whileTap={{ scale: 0.85 }}
-        drag
+        drag={!isIntroActive}
         dragConstraints={{ left: -30, right: 30, top: -30, bottom: 30 }}
-        onClick={() => triggerToast("📢 Loud & Clear Marketing!")}
+        onClick={() => triggerToast("📢 Megaphone Broadcast!")}
       >
         <motion.div
-          style={{ scale: velocityScale, rotate: velocityRotate }}
+          style={{ scale: isIntroActive ? 1 : velocityScale, rotate: isIntroActive ? 0 : velocityRotate }}
           animate={{ rotate: [-8, 8, -8] }}
           transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
         >
@@ -201,44 +332,31 @@ export function AnimatedBackground() {
         </motion.div>
       </motion.div>
 
-      {/* 6. CENTER DOODLE: Starburst Sparkle */}
+      {/* 6. Cartoon Rocket Flame Mascot */}
       <motion.div
-        style={{ y: smoothY3 }}
-        animate={{
-          x: mousePos.x * 2.5,
-          rotate: mousePos.x * 8,
-        }}
-        className="absolute top-[52%] left-[8%] w-16 h-16 md:w-22 md:h-22 opacity-40 dark:opacity-55 hover:opacity-100 transition-opacity pointer-events-auto cursor-pointer"
-        whileHover={{ scale: 1.4, rotate: 180, filter: "drop-shadow(0 0 20px rgba(227,27,35,0.7))" }}
-        onClick={() => triggerToast("⭐ Starburst Sparkle!")}
-      >
-        <motion.div
-          style={{ rotate: velocityRotate }}
-          animate={{ rotate: [0, 90, 180, 270, 360] }}
-          transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
-        >
-          <svg viewBox="0 0 100 100" fill="#E31B23">
-            <path d="M50 0 L60 35 L95 20 L70 50 L95 80 L60 65 L50 100 L40 65 L5 80 L30 50 L5 20 L40 35 Z" />
-          </svg>
-        </motion.div>
-      </motion.div>
-
-      {/* 7. LOWER-LEFT: Cartoon Rocket Flame Mascot */}
-      <motion.div
-        style={{ y: smoothY1 }}
-        animate={{
-          x: mousePos.x * 1.3,
-          y: mousePos.y * 1.3,
-        }}
-        className="absolute bottom-[10%] left-[4%] w-24 h-24 md:w-32 md:h-32 opacity-35 dark:opacity-50 hover:opacity-100 transition-opacity pointer-events-auto cursor-pointer"
-        whileHover={{ scale: 1.3, y: -20, filter: "drop-shadow(0 0 18px rgba(227,27,35,0.7))" }}
+        style={{ y: isIntroActive ? 0 : smoothY1 }}
+        initial={{ x: "-40vw", y: "40vh", scale: 0, opacity: 0 }}
+        animate={
+          isIntroActive
+            ? { x: "-60px", y: "70px", scale: 1, opacity: 1 }
+            : { x: mousePos.x * 1.3, y: mousePos.y * 1.3, scale: 1, opacity: 1 }
+        }
+        transition={
+          isIntroActive
+            ? { delay: 1.7, type: "spring", stiffness: 120, damping: 14 }
+            : { type: "spring", stiffness: 50, damping: 20 }
+        }
+        className={`absolute ${
+          isIntroActive ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 opacity-90" : "bottom-[10%] left-[4%] opacity-15 sm:opacity-20 dark:opacity-25 hover:opacity-100"
+        } w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 transition-opacity pointer-events-auto cursor-pointer`}
+        whileHover={{ scale: 1.3, y: -20, filter: "drop-shadow(0 0 18px rgba(227,27,35,0.4))" }}
         whileTap={{ scale: 0.85 }}
-        drag
+        drag={!isIntroActive}
         dragConstraints={{ left: -30, right: 30, top: -30, bottom: 30 }}
-        onClick={() => triggerToast("🚀 Launching Student Creators!")}
+        onClick={() => triggerToast("🚀 Rocket Ignition!")}
       >
         <motion.div
-          style={{ y: velocityY, scale: velocityScale }}
+          style={{ y: isIntroActive ? 0 : velocityY, scale: isIntroActive ? 1 : velocityScale }}
           animate={{ y: [0, -14, 0], scale: [0.98, 1.05, 0.98] }}
           transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
         >
@@ -259,54 +377,31 @@ export function AnimatedBackground() {
         </motion.div>
       </motion.div>
 
-      {/* 8. LOWER-CENTER: Cartoon Price Tag Mascot */}
+      {/* 7. Twin-Eye Mushroom Mascot */}
       <motion.div
-        style={{ y: smoothY4 }}
-        animate={{
-          x: mousePos.x * -1.1,
-          y: mousePos.y * -1.1,
-        }}
-        className="absolute bottom-[18%] left-[45%] w-18 h-18 md:w-24 md:h-24 opacity-35 dark:opacity-50 hover:opacity-100 transition-opacity pointer-events-auto cursor-pointer"
-        whileHover={{ scale: 1.3, rotate: 20, filter: "drop-shadow(0 0 16px rgba(227,27,35,0.6))" }}
+        style={{ y: isIntroActive ? 0 : smoothY2 }}
+        initial={{ x: "40vw", y: "40vh", scale: 0, opacity: 0 }}
+        animate={
+          isIntroActive
+            ? { x: "60px", y: "70px", scale: 1, opacity: 1 }
+            : { x: mousePos.x * -1.0, y: mousePos.y * -1.0, scale: 1, opacity: 1 }
+        }
+        transition={
+          isIntroActive
+            ? { delay: 2.0, type: "spring", stiffness: 120, damping: 14 }
+            : { type: "spring", stiffness: 50, damping: 20 }
+        }
+        className={`absolute ${
+          isIntroActive ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 opacity-90" : "bottom-[8%] right-[4%] opacity-15 sm:opacity-20 dark:opacity-25 hover:opacity-100"
+        } w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 transition-opacity pointer-events-auto cursor-pointer`}
+        whileHover={{ scale: 1.3, rotate: -12, filter: "drop-shadow(0 0 18px rgba(227,27,35,0.4))" }}
         whileTap={{ scale: 0.85 }}
-        drag
+        drag={!isIntroActive}
         dragConstraints={{ left: -30, right: 30, top: -30, bottom: 30 }}
-        onClick={() => triggerToast("🏷️ Sales & Brand Pitching!")}
+        onClick={() => triggerToast("🍄 SELLIX Squad Mushroom!")}
       >
         <motion.div
-          style={{ rotate: velocityRotate }}
-          animate={{ rotate: [-10, 10, -10] }}
-          transition={{ repeat: Infinity, duration: 3.8, ease: "easeInOut" }}
-        >
-          <svg viewBox="0 0 100 100" fill="none">
-            <path
-              d="M 20 20 H 60 L 90 50 L 50 90 L 10 50 V 20 Z"
-              fill="#E31B23"
-            />
-            <circle cx="30" cy="30" r="6" fill="white" />
-            <circle cx="48" cy="50" r="4" fill="white" />
-            <circle cx="62" cy="58" r="4" fill="white" />
-            <path d="M 52 68 Q 60 74 68 66" stroke="white" strokeWidth="3" strokeLinecap="round" fill="none" />
-          </svg>
-        </motion.div>
-      </motion.div>
-
-      {/* 9. LOWER-RIGHT: Twin-Eye Mushroom Mascot */}
-      <motion.div
-        style={{ y: smoothY2 }}
-        animate={{
-          x: mousePos.x * -1.0,
-          y: mousePos.y * -1.0,
-        }}
-        className="absolute bottom-[8%] right-[4%] w-24 h-24 md:w-32 md:h-32 opacity-35 dark:opacity-50 hover:opacity-100 transition-opacity pointer-events-auto cursor-pointer"
-        whileHover={{ scale: 1.3, rotate: -12, filter: "drop-shadow(0 0 18px rgba(227,27,35,0.6))" }}
-        whileTap={{ scale: 0.85 }}
-        drag
-        dragConstraints={{ left: -30, right: 30, top: -30, bottom: 30 }}
-        onClick={() => triggerToast("🍄 SELLIX Squad Mascot!")}
-      >
-        <motion.div
-          style={{ y: velocityY, scale: velocityScale }}
+          style={{ y: isIntroActive ? 0 : velocityY, scale: isIntroActive ? 1 : velocityScale }}
           animate={{ y: [0, -8, 0], rotate: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 4.2, ease: "easeInOut" }}
         >
@@ -319,9 +414,33 @@ export function AnimatedBackground() {
         </motion.div>
       </motion.div>
 
+      {/* 8. Starburst Sparkle & Price Tag (Subtle Doodles) */}
+      <motion.div
+        style={{ y: isIntroActive ? 0 : smoothY3 }}
+        animate={{
+          x: isIntroActive ? 0 : mousePos.x * 2.5,
+          rotate: isIntroActive ? 0 : mousePos.x * 8,
+        }}
+        className={`absolute ${
+          isIntroActive ? "top-[40%] left-[46%] z-50 opacity-90" : "top-[52%] left-[8%] opacity-15 sm:opacity-20 dark:opacity-25 hover:opacity-100"
+        } w-12 h-12 sm:w-16 sm:h-16 transition-opacity pointer-events-auto cursor-pointer`}
+        onClick={() => triggerToast("⭐ Starburst!")}
+      >
+        <motion.div
+          style={{ rotate: isIntroActive ? 0 : velocityRotate }}
+          animate={{ rotate: [0, 90, 180, 270, 360] }}
+          transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+        >
+          <svg viewBox="0 0 100 100" fill="#E31B23">
+            <path d="M50 0 L60 35 L95 20 L70 50 L95 80 L60 65 L50 100 L40 65 L5 80 L30 50 L5 20 L40 35 Z" />
+          </svg>
+        </motion.div>
+      </motion.div>
+
       {/* Ambient Gradient Glow Orbs */}
       <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-[#E31B23]/10 dark:bg-[#E31B23]/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/3 right-1/4 w-[30rem] h-[30rem] bg-amber-500/8 dark:bg-[#E31B23]/10 rounded-full blur-3xl pointer-events-none" />
     </div>
   );
 }
+

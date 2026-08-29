@@ -54,7 +54,7 @@ export function Footer() {
           <motion.a
             whileHover={{ y: -4, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            href="LINKEDIN_LINK_PLACEHOLDER"
+            href="https://www.linkedin.com/company/sellix-muj/posts/?feedView=all"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto flex-1 flex items-center justify-between px-6 py-4 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] dark:hover:border-[#E31B23] shadow-lg hover:shadow-xl hover:shadow-[#E31B23]/10 transition-all duration-300 group"
@@ -79,7 +79,7 @@ export function Footer() {
           <motion.a
             whileHover={{ y: -4, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            href="GOOGLE_MAPS_LINK_PLACEHOLDER"
+            href="https://www.google.com/maps/place/Manipal+University+Jaipur/@26.8438552,75.5626594,17z/data=!3m1!4b1!4m6!3m5!1s0x396c4850e05bee9b:0x1b8d67402d4eb863!8m2!3d26.8438552!4d75.5652343!16s%2Fm%2F0wdnw8v?entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto flex-1 flex items-center justify-between px-6 py-4 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] dark:hover:border-[#E31B23] shadow-lg hover:shadow-xl hover:shadow-[#E31B23]/10 transition-all duration-300 group"

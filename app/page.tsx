@@ -91,7 +91,7 @@ export default function HomePage() {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="max-w-5xl text-center space-y-6"
         >
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight uppercase leading-[0.95] text-zinc-900 dark:text-white">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight uppercase leading-[1.05] text-zinc-900 dark:text-white">
                 <span className="text-[#E31B23] underline decoration-[#E31B23]/30 decoration-wavy">SELLIX :-</span> SALES AND SOCIAL MEDIA MARKETING CLUB OF MUJ.
           </h1>
 
