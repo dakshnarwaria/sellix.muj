@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { SellixPlaceholder } from "../components/Placeholders";
+import Image from "next/image";
 
 interface GalleryLightboxProps {
   album: string[] | null;
@@ -92,12 +93,14 @@ export function GalleryLightbox({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
-              className="w-full h-full flex items-center justify-center p-2"
+              className="relative w-full h-full flex items-center justify-center p-2"
             >
-              <SellixPlaceholder
-                label={album[currentIndex]}
-                type="gallery"
-                className="w-full h-full rounded-3xl shadow-2xl"
+              <Image
+                src={`/gallery_images/${album[currentIndex]}`}
+                alt={`Gallery image ${currentIndex + 1}`}
+                fill
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                className="object-contain rounded-3xl shadow-2xl"
               />
             </motion.div>
           </AnimatePresence>

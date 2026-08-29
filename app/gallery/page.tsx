@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { SEMICIRCLE_GALLERY, HORIZONTAL_STRIP_GALLERY, GALLERY_EVENTS } from "../data/gallery";
 import { SellixPlaceholder } from "../components/Placeholders";
 import { GalleryLightbox } from "./GalleryLightbox";
 import { Footer } from "../components/Footer";
 import { VelocityMarquee, VelocityRotator } from "../components/ScrollVelocityMotion";
+import Image from "next/image";
 
 export default function GalleryPage() {
   const [activeAlbum, setActiveAlbum] = useState<{ album: string[]; eventName: string } | null>(null);
@@ -60,7 +61,6 @@ export default function GalleryPage() {
         {/* Velocity Continuous Rotating Orbit Arc */}
         <VelocityRotator baseRotateVelocity={18}>
           {(rotateAngle) => {
-            const inverseRotate = useTransform(rotateAngle, (r) => -r);
             return (
               <div className="relative w-full h-[360px] sm:h-[480px] flex items-center justify-center overflow-hidden">
                 <motion.div
@@ -83,15 +83,15 @@ export default function GalleryPage() {
                           top: `calc(50% + ${y}px - 50px)`,
                         }}
                         whileHover={{ scale: 1.15 }}
-                        className="w-32 h-24 sm:w-40 sm:h-28 rounded-2xl overflow-hidden shadow-xl border-2 border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] transition-all duration-300"
+                        className="relative w-32 h-24 sm:w-40 sm:h-28 rounded-2xl overflow-hidden shadow-xl border-2 border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] transition-all duration-300"
                       >
-                        <motion.div style={{ rotate: inverseRotate }} className="w-full h-full">
-                          <SellixPlaceholder
-                            label={item.image}
-                            type="gallery"
-                            className="w-full h-full rounded-none border-none p-1"
-                          />
-                        </motion.div>
+                        <Image
+                          src={`/gallery_images/${item.image}`}
+                          alt={item.title || "Gallery item"}
+                          fill
+                          sizes="(max-width: 768px) 50vw, 25vw"
+                          className="object-cover rounded-none border-none"
+                        />
                       </motion.div>
                     );
                   })}
@@ -123,12 +123,14 @@ export default function GalleryPage() {
             <motion.div
               key={item.id}
               whileHover={{ scale: 1.05, y: -4 }}
-              className="w-64 sm:w-80 h-44 sm:h-52 rounded-2xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] shrink-0 transition-all duration-300"
+              className="relative w-64 sm:w-80 h-44 sm:h-52 rounded-2xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] shrink-0 transition-all duration-300"
             >
-              <SellixPlaceholder
-                label={item.image}
-                type="gallery"
-                className="w-full h-full rounded-none border-none"
+              <Image
+                src={`/gallery_images/${item.image}`}
+                alt={item.title || "Gallery item"}
+                fill
+                sizes="(max-width: 640px) 256px, 320px"
+                className="object-cover rounded-none border-none"
               />
             </motion.div>
           ))}
@@ -168,11 +170,13 @@ export default function GalleryPage() {
                 {eventSec.eventName}
               </h3>
 
-              <div className="overflow-hidden rounded-2xl">
-                <SellixPlaceholder
-                  label={eventSec.mainImage}
-                  type="gallery"
-                  className="w-full h-[280px] sm:h-[340px] group-hover:scale-105 transition-transform duration-500"
+              <div className="relative overflow-hidden rounded-2xl w-full h-[280px] sm:h-[340px]">
+                <Image
+                  src={`/event_images/${eventSec.mainImage}`}
+                  alt={eventSec.eventName ?? "Gallery image"}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
 
