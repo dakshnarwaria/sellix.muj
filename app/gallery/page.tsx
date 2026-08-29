@@ -62,7 +62,30 @@ export default function GalleryPage() {
         <VelocityRotator baseRotateVelocity={18}>
           {(rotateAngle) => {
             return (
-              <div className="relative w-full h-[360px] sm:h-[480px] flex items-center justify-center overflow-hidden">
+              <div className="relative w-full h-[440px] sm:h-[560px] flex items-center justify-center overflow-hidden">
+                {/* Central Stationary Sellix Logo Hub */}
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                  className="absolute z-20 flex items-center justify-center pointer-events-none"
+                >
+                  {/* Glowing background ring behind logo */}
+                  <div className="absolute inset-0 rounded-full bg-[#E31B23]/20 blur-xl animate-pulse" />
+                  
+                  {/* Logo Container Badge */}
+                  <div className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-full p-2 bg-white dark:bg-zinc-950 border-2 border-[#E31B23] shadow-[0_0_30px_rgba(227,27,35,0.35)] flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="/sellix_logo.jpeg.png"
+                      alt="SELLIX Logo"
+                      width={100}
+                      height={100}
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Rotating Orbit Circle */}
                 <motion.div
                   style={{ rotate: rotateAngle }}
                   className="relative w-[600px] sm:w-[800px] h-[600px] sm:h-[800px] rounded-full border border-dashed border-[#E31B23]/30 flex items-center justify-center"
@@ -79,11 +102,13 @@ export default function GalleryPage() {
                         key={item.id}
                         style={{
                           position: "absolute",
-                          left: `calc(50% + ${x}px - 70px)`,
-                          top: `calc(50% + ${y}px - 50px)`,
+                          left: `calc(50% + ${x}px)`,
+                          top: `calc(50% + ${y}px)`,
+                          x: "-50%",
+                          y: "-50%",
                         }}
                         whileHover={{ scale: 1.15 }}
-                        className="relative w-32 h-24 sm:w-40 sm:h-28 rounded-2xl overflow-hidden shadow-xl border-2 border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] transition-all duration-300"
+                        className="relative w-36 h-28 sm:w-52 sm:h-36 rounded-2xl overflow-hidden shadow-xl border-2 border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] transition-all duration-300"
                       >
                         <Image
                           src={`/gallery_images/${item.image}`}
