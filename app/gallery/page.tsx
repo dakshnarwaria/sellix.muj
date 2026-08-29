@@ -93,6 +93,7 @@ export default function GalleryPage() {
                   {SEMICIRCLE_GALLERY.map((item, index) => {
                     const total = SEMICIRCLE_GALLERY.length;
                     const angle = (index / total) * 2 * Math.PI; // Full circle distribution
+                    const angleDeg = (index / total) * 360;
                     const radius = 280; // Radius distance
                     const x = radius * Math.cos(angle - Math.PI / 2);
                     const y = radius * Math.sin(angle - Math.PI / 2);
@@ -106,16 +107,17 @@ export default function GalleryPage() {
                           top: `calc(50% + ${y}px)`,
                           x: "-50%",
                           y: "-50%",
+                          rotate: `${angleDeg}deg`,
                         }}
                         whileHover={{ scale: 1.15 }}
-                        className="relative w-36 h-28 sm:w-52 sm:h-36 rounded-2xl overflow-hidden shadow-xl border-2 border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] transition-all duration-300"
+                        className="relative w-36 h-28 sm:w-52 sm:h-36 rounded-2xl overflow-hidden shadow-xl border-2 border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] transition-all duration-300 bg-zinc-900"
                       >
                         <Image
                           src={`/gallery_images/${item.image}`}
                           alt={item.title || "Gallery item"}
                           fill
                           sizes="(max-width: 768px) 50vw, 25vw"
-                          className="object-cover rounded-none border-none"
+                          className="object-cover rounded-none border-none scale-105"
                         />
                       </motion.div>
                     );
@@ -165,17 +167,17 @@ export default function GalleryPage() {
       {/* ------------------------------------------------------------- */}
       {/* 3. EVENT GALLERY SECTIONS (Minimal Image-Focused Showcase)     */}
       {/* ------------------------------------------------------------- */}
-      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-20 mb-28">
+      <section className="px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full space-y-10 mb-28">
         <div className="text-center space-y-2">
           <span className="text-xs font-mono font-bold tracking-widest text-[#E31B23] uppercase">
             // EVENT ALBUMS
           </span>
-          <h2 className="text-3xl sm:text-5xl font-black uppercase text-zinc-900 dark:text-white">
+          <h2 className="text-3xl sm:text-4xl font-black uppercase text-zinc-900 dark:text-white">
             CLICK TO <span className="text-[#E31B23]">INSPECT LIGHTBOX</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
           {GALLERY_EVENTS.map((eventSec) => (
             <motion.div
               key={eventSec.id}
@@ -189,24 +191,26 @@ export default function GalleryPage() {
                   eventName: eventSec.eventName,
                 })
               }
-              className="cursor-pointer space-y-4 group p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="cursor-pointer flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-[#E31B23] shadow-lg hover:shadow-2xl transition-all duration-300 group"
             >
-              <h3 className="text-2xl font-black uppercase text-zinc-900 dark:text-white group-hover:text-[#E31B23] transition-colors">
-                {eventSec.eventName}
-              </h3>
+              <div className="space-y-4">
+                <h3 className="text-xl sm:text-2xl font-black uppercase text-zinc-900 dark:text-white group-hover:text-[#E31B23] transition-colors text-center">
+                  {eventSec.eventName}
+                </h3>
 
-              <div className="relative overflow-hidden rounded-2xl w-full h-[280px] sm:h-[340px]">
-                <Image
-                  src={`/event_images/${eventSec.mainImage}`}
-                  alt={eventSec.eventName ?? "Gallery image"}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 50vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                <div className="relative overflow-hidden rounded-2xl w-full max-w-[280px] sm:max-w-[320px] aspect-[2480/3508] mx-auto shadow-md">
+                  <Image
+                    src={`/event_images/${eventSec.mainImage}`}
+                    alt={eventSec.eventName ?? "Gallery image"}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 320px"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
               </div>
 
-              <div className="flex items-center justify-between text-xs font-mono font-bold text-[#E31B23]">
-                <span>VIEW ALBUM ({eventSec.album.length} PHOTOS)</span>
+              <div className="flex items-center justify-between text-xs font-mono font-bold text-[#E31B23] pt-4 mt-3 border-t border-zinc-100 dark:border-zinc-800/80">
+                <span>{eventSec.album.length} PHOTOS</span>
                 <span>OPEN LIGHTBOX &rarr;</span>
               </div>
             </motion.div>
