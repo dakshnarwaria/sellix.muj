@@ -6,6 +6,7 @@ import { EXECUTIVE_TEAM, CORE_TEAM, TeamMember } from "../data/team";
 import { SellixPlaceholder } from "../components/Placeholders";
 import { InstagramIcon, LinkedinIcon, GithubIcon } from "../components/Icons";
 import { Footer } from "../components/Footer";
+import Image from "next/image";
 
 function TeamCard({ member, isExecutive }: { member: TeamMember; isExecutive: boolean }) {
   return (
@@ -19,12 +20,14 @@ function TeamCard({ member, isExecutive }: { member: TeamMember; isExecutive: bo
         isExecutive ? "h-[380px] sm:h-[440px]" : "h-[320px] sm:h-[360px]"
       }`}
     >
-      {/* Background Image Placeholder Canvas */}
+      {/* Background Image Canvas */}
       <div className="absolute inset-0 w-full h-full group-hover:scale-105 transition-transform duration-500">
-        <SellixPlaceholder
-          label={member.image}
-          type="team"
-          className="w-full h-full rounded-none border-none"
+        <Image
+          src={`/team_images/${member.image}`}
+          alt={member.name ?? "Team member"}
+          fill
+          sizes="(max-width: 768px) 50vw, 25vw"
+          className="object-cover rounded-none border-none"
         />
       </div>
 

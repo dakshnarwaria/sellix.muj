@@ -92,7 +92,7 @@ export function SellixPlaceholder({
 
       {/* SELLIX Watermark Logo */}
       <div className="absolute bottom-2 left-3 opacity-20 text-[10px] font-black tracking-tighter text-[#E31B23]">
-        SELLIX STUDIO
+        SELLIX 
       </div>
     </div>
   );
