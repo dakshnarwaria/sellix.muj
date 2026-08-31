@@ -119,7 +119,7 @@ export default function TeamPage() {
         <div className="flex items-center gap-3 mb-8">
           <span className="w-3 h-8 bg-[#E31B23] rounded-full" />
           <h2 className="text-2xl sm:text-3xl font-black uppercase text-zinc-900 dark:text-white tracking-tight">
-            EXECUTIVE COMMITTEE <span className="text-xs font-mono text-[#E31B23] font-bold ml-2">(07 MEMBERS)</span>
+            EXECUTIVE COMMITTEE
           </h2>
         </div>
 
@@ -135,7 +135,7 @@ export default function TeamPage() {
         <div className="flex items-center gap-3 mb-8">
           <span className="w-3 h-8 bg-[#E31B23]/70 rounded-full" />
           <h2 className="text-2xl sm:text-3xl font-black uppercase text-zinc-900 dark:text-white tracking-tight">
-            CORE COMMITTEE <span className="text-xs font-mono text-[#E31B23] font-bold ml-2">(12 MEMBERS)</span>
+            CORE COMMITTEE 
           </h2>
         </div>
 

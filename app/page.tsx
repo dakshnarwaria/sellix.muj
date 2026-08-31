@@ -17,7 +17,7 @@ const LEADERS = [
     id: "leader-1",
     name: "Arshraj Punni",
     role: "Founder and President",
-    quote: "Building the next generation of digital marketing leaders through bold visual storytelling.",
+    quote: "Building the next generation of digital marketing leaders through bold qualities, hands-on campaigns, and real-world mentorship.",
     image: "LEADER_01_IMAGE",
   },
   {
@@ -25,14 +25,14 @@ const LEADERS = [
     name: "Akshat Sharma",
     role: "Vice President",
     quote: "Sales is not about pushing products—it's about engineering genuine human connections.",
-    image: "LEADER_02_IMAGE",
+    image: "Akshat.jpg",
   },
   {
     id: "leader-3",
     name: "Devashya Patel",
     role: "Technical Secretary",
     quote: "Visual identity should feel alive, cartoonish, memorable, and undeniably distinct.",
-    image: "LEADER_03_IMAGE",
+    image: "Devashya.jpg",
   },
   {
     id: "leader-4",
@@ -57,10 +57,10 @@ const LEADERS = [
   },
   {
     id: "leader-7",
-    name: "Akshata Sharma",
+    name: "Akshita Sharma",
     role: "Managing Director",
     quote: "Connecting bold student campaigns directly with top national brands and sponsors.",
-    image: "LEADER_07_IMAGE",
+    image: "Akshita.jpg",
   },
 ];
 
@@ -208,7 +208,7 @@ export default function HomePage() {
               FEATURED <span className="text-[#E31B23]">EVENTS</span>
             </h2>
             <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-              Check out our upcoming flagship masterclasses, competitions, and creative summits.
+              Check out our upcoming & previous flagship masterclasses, competitions, and creative summits.
             </p>
           </div>
 
@@ -311,7 +311,15 @@ export default function HomePage() {
             >
               <div>
                 <div className="relative mb-6">
-                  <SellixPlaceholder label={leader.image} type="leader" className="w-full h-[220px] rounded-2xl" />
+                  <div className="relative w-full h-[220px] rounded-2xl overflow-hidden">
+                    <Image
+                      src={`/team_images/${leader.image}`}
+                      alt={leader.name ?? "Leader"}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 220px"
+                      className="object-cover"
+                    />
+                  </div>
                   <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#E31B23] text-white font-mono text-[10px] font-bold">
                     0{index + 1} / 07
                   </div>

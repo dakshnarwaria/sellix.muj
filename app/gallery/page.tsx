@@ -38,7 +38,8 @@ export default function GalleryPage() {
         </motion.h1>
 
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-          An immersive orbital & scroll-controlled visual showcase documenting our campaigns, workshops, and flagship experiences.
+          "We do not remember days, we remember moments." — Cesare Pavese <br />
+          Memories are the architecture of who we've become, built one moment at a time.
         </p>
       </section>
 
@@ -48,13 +49,13 @@ export default function GalleryPage() {
       <section className="relative z-10 py-16 mb-24 overflow-hidden">
         <div className="text-center mb-8">
           <span className="text-xs font-mono font-bold tracking-widest text-[#E31B23] uppercase">
-            // ORBITAL VISUAL ARC
+            // NOT JUST A CLUB
           </span>
           <h2 className="text-2xl sm:text-3xl font-black uppercase text-zinc-900 dark:text-white mt-1">
-            ROTATING <span className="text-[#E31B23]">SEMICIRCLE</span>
+            We create <span className="text-[#E31B23]">MEMORIES</span>
           </h2>
           <p className="text-xs font-mono text-zinc-500 uppercase tracking-wider mt-1">
-            [CONSTANT CLOCKWISE | SCROLL DOWN = FASTER | SCROLL UP = COUNTER-CLOCKWISE]
+              [WE CREATE, WE COLLABORATE, WE CELEBRATE]
           </p>
         </div>
 
@@ -72,7 +73,7 @@ export default function GalleryPage() {
                 >
                   {/* Glowing background ring behind logo */}
                   <div className="absolute inset-0 rounded-full bg-[#E31B23]/20 blur-xl animate-pulse" />
-                  
+
                   {/* Logo Container Badge */}
                   <div className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-full p-2 bg-white dark:bg-zinc-950 border-2 border-[#E31B23] shadow-[0_0_30px_rgba(227,27,35,0.35)] flex items-center justify-center overflow-hidden">
                     <Image
@@ -135,13 +136,13 @@ export default function GalleryPage() {
       <section className="relative z-10 py-16 mb-28 bg-zinc-100 dark:bg-zinc-900/50 border-y border-zinc-200 dark:border-zinc-800 overflow-hidden">
         <div className="text-center mb-8">
           <span className="text-xs font-mono font-bold tracking-widest text-[#E31B23] uppercase">
-            // CONTINUOUS STRIP
+            // VEDI | VINI | VICI
           </span>
           <h2 className="text-2xl sm:text-3xl font-black uppercase text-zinc-900 dark:text-white mt-1">
-            HORIZONTAL <span className="text-[#E31B23]">TIMELINE</span>
+            <span className="text-[#E31B23]">BEHIND</span> THE SCENES
           </h2>
           <p className="text-xs font-mono text-zinc-500 uppercase tracking-wider mt-1">
-            [CONSTANT RIGHT → LEFT | SCROLL DOWN = FASTER | SCROLL UP = LEFT → RIGHT]
+            [We plan together, We execute together, We chill together]
           </p>
         </div>
 
@@ -173,7 +174,7 @@ export default function GalleryPage() {
             // EVENT ALBUMS
           </span>
           <h2 className="text-3xl sm:text-4xl font-black uppercase text-zinc-900 dark:text-white">
-            CLICK TO <span className="text-[#E31B23]">INSPECT LIGHTBOX</span>
+            CHECK OUT <span className="text-[#E31B23]">EVENT</span> MEMORIES
           </h2>
         </div>
 
