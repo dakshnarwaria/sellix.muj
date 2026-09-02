@@ -2,7 +2,7 @@
 
 The official website for **Sellix** — built with [Next.js](https://nextjs.org), featuring an event calendar, photo gallery, and team showcase.
 
-🔗 **Live Site:** [https://sellixmuj.vercel.app/](#) *(placeholder — update once deployed)*
+🔗 **Live Site:** [https://sellixmuj.vercel.app/]
 
 ## Features
 
