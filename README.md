@@ -1,8 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sellix
+
+The official website for **Sellix** — built with [Next.js](https://nextjs.org), featuring an event calendar, photo gallery, and team showcase.
+
+## Features
+
+- 🎉 **Events Page** — Browse upcoming workshops, bootcamps, and meetups with full event details, venue info, and one-click registration
+- 🖼️ **Gallery** — Album-based photo gallery with a lightbox viewer and horizontal scrolling highlight strip
+- 👥 **Team** — Meet the team, organized by leadership and members
+- 🌗 **Dark mode** support throughout
+- ⚡ Smooth animations powered by [Framer Motion](https://www.framer.com/motion/)
+- 📱 Fully responsive, mobile-first design
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org) (App Router)
+- [React](https://react.dev)
+- [TypeScript](https://www.typescriptlang.org)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Framer Motion](https://www.framer.com/motion/) — animations
+- [Lucide React](https://lucide.dev) — icons
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -16,21 +46,48 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/
+├── data/           # Static data (events, gallery albums, team members)
+├── events/         # Events page
+├── gallery/        # Gallery page & lightbox component
+├── team/           # Team page
+├── components/     # Shared UI components
+├── layout.tsx
+└── page.tsx        # Home page
+
+public/
+├── event_images/   # Event posters & QR codes
+├── gallery_images/ # Gallery photos
+├── team_images/    # Team member photos
+└── ...
+```
+
+## Adding Content
+
+- **Events** — add a new entry to `app/data/events.ts` and drop the corresponding poster/QR image into `public/event_images/`
+- **Gallery** — add photos to `public/gallery_images/` and reference them in `app/data/gallery.ts`
+- **Team** — add member photos to `public/team_images/` and update `app/data/team.ts`
+
+Image filenames in the data files must exactly match (including case) the files in the corresponding `public/` folder.
 
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js Documentation](https://nextjs.org/docs) — learn about Next.js features and API
+- [Learn Next.js](https://nextjs.org/learn) — an interactive Next.js tutorial
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
+The easiest way to deploy this app is to use the [Vercel Platform](https://vercel.com/new) from the creators of Next.js.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<hr>
+<br>
+
+&copy; 2026 SELLIX MUJ | ALL Rights Reserved | Contact: [LinkedIn](https://www.linkedin.com/company/sellix-muj/posts/?feedView=all) [GitHub](https://github.com/sellixmuj) [Instagram](https://www.instagram.com/sellix.muj?igsi=bnRhYnZzM2U4dWxl)
+
