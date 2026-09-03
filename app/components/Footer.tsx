@@ -132,7 +132,9 @@ export function Footer() {
         {/* Bottom Copyright */}
         <div className="flex flex-col sm:flex-row items-center justify-between w-full max-w-6xl pt-6 border-t border-zinc-200/60 dark:border-zinc-800/60 text-xs text-zinc-500 dark:text-zinc-500 gap-2">
           <span>&copy; {new Date().getFullYear()} SELLIX — Sales & Social Media Marketing. All rights reserved.</span>
-          <span className="font-mono text-[#E31B23]">DESIGNED FOR IMPACT & ENGAGEMENT</span>
+          <p>
+            Made with ❤️ by{" Technical Team, Sellix MUJ"}
+          </p>
         </div>
       </div>
     </footer>

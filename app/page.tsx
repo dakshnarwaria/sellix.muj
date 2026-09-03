@@ -154,12 +154,12 @@ export default function HomePage() {
             </h2>
 
             <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
-             🚀SELLIX is the Sales & Social Media Marketing Club of MUJ, where creativity meets strategy!. We focus on marketing and selling innovative technical and non-technical, mostly student-made projects, while helping members build real-world skills in sales, branding, communication, and digital marketing.💡📱
+             🚀SELLIX is the Sales & Social Media Marketing Club of MUJ, where creativity meets strategy!. We focus on marketing and selling innovative technical and non-technical, mostly student-made projects, while helping members build real-world skills in sales, branding, communication, and digital marketing.
 
             </p>
 
             <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
-              From high-energy competitions like Salesothon 🏆 to insightful workshops 🎯 and exciting fun events 🎉, SELLIX creates opportunities to learn, connect, experiment, and turn ideas into impact. 🔥
+              From high-energy competitions like Salesothon to insightful workshops and exciting fun events, SELLIX creates opportunities to learn, connect, experiment, and turn ideas into impact. 
             </p>
 
             <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed"> SELLIX — Where Ideas Meet the Market. 🚀</p>
@@ -287,7 +287,7 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------------------------------------- */}
-      {/* 4. OUR VISION & MISSION (7 Leader Scroll-Linked Items)       */}
+      {/* 4. OUR VISION (7 Leader Scroll-Linked Items)       */}
       {/* ------------------------------------------------------------- */}
       <section className="relative z-10 py-24 bg-zinc-100 dark:bg-zinc-900/60 border-t border-zinc-200/60 dark:border-zinc-800/60 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 flex flex-col items-center text-center">
@@ -295,10 +295,10 @@ export default function HomePage() {
             // LEADERSHIP DIRECTIVES
           </span>
           <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-tight text-zinc-900 dark:text-white">
-            OUR VISION & <span className="text-[#E31B23]">MISSION</span>
+            OUR <span className="text-[#E31B23]">VISION</span>
           </h2>
           <p className="text-xs font-mono text-zinc-500 mt-2 uppercase tracking-widest">
-            [CONSTANT RIGHT → LEFT | SCROLL DOWN = FASTER | SCROLL UP = LEFT → RIGHT]
+            LEAD WITH VISION, ACT WITH MISSION
           </p>
         </div>
 
